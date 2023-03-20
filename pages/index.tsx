@@ -3,21 +3,27 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-import { useEffect, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { Stats } from '@react-three/drei'
-import {ethers} from 'ethers'
+import React, { useEffect, useRef, useState } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Edges, Stats, Text, useCursor, useTexture } from '@react-three/drei'
+import { ethers } from 'ethers'
 import { createClient } from 'urql'
+import * as THREE from 'three'
+import { useRoute } from 'wouter'
+import useLocation from 'wouter/use-location'
+import { easing } from 'maath'
 
-export default function Home() {
 
+const Home = () => {
+
+  const GOLDENRATIO = 1.61803398875
 
   const [address, setAddress] = useState("");
 
   const [MutantTokens, setMutantTokens] = useState([]);
   const [BoredTokens, setBoredTokens] = useState([]);
 
-  const MutantAPIURL = "https://api.thegraph.com/subgraphs/name/dabit3/boredapeyachtclub"
+  const MutantAPIURL = "https://api.thegraph.com/subgraphs/name/ibrahimsam96/boredandmutant-apes"
   const BoredAPIURL = "https://api.thegraph.com/subgraphs/name/gautamraju15/bayc-indexer"
 
   const Mutantquery = `
@@ -47,7 +53,7 @@ export default function Home() {
   })
 
   useEffect(() => {
-    let isAddress = ethers.utils.isAddress(address) 
+    let isAddress = ethers.utils.isAddress(address)
     if (isAddress) {
       fetchData()
     }
@@ -65,6 +71,104 @@ export default function Home() {
     // setTokens(response.data.tokens);
   }
 
+  const Frame = ({ ...props }) => {
+
+    const project = useRef()
+    const frame = useRef();
+    const [, params] = useRoute('/3D/:id')
+    const [hovered, hover] = useState(false)
+    const [location, setLocation] = useLocation()
+
+    const isActive = params?.id === name;
+    useCursor(hovered)
+
+
+    const ImageMaterial = () => {
+      const texture = useTexture(`\Textures/${name}.`)
+      return (
+        <meshBasicMaterial ref={project} map={texture} toneMapped={false} />
+      )
+
+    }
+
+
+    return (
+      <group {...props}>
+        <mesh
+          ref={project}
+          name={name}
+          onPointerOver={(e) => (e.stopPropagation(), hover(true))}
+          onPointerOut={() => hover(false)}
+          scale={[1.1, GOLDENRATIO, 0.05]}
+          position={[0, GOLDENRATIO / 1.9, 0]}
+        >
+          <boxGeometry />
+          <meshStandardMaterial color={"black"} metalness={0.5} roughness={0.5} envMapIntensity={2} />
+          <mesh ref={frame} raycast={() => null} scale={[0.95, 0.93, 0.9]} position={[0, 0, 0.2]}>
+            <boxGeometry />
+
+            {/* <ImageMaterial /> */}
+
+            <Edges
+              scale={1.1}
+              threshold={15} // Display edges only when the angle between two faces exceeds this value (default=15 degrees)
+              color={isActive || hovered ? "orange" : "turquoise"}
+            />
+          </mesh>
+
+          {/* <Image raycast={() => null} ref={project} position={[0, 0, 0.7]} url={url} /> */}
+        </mesh>
+
+        <Text color={"White"} maxWidth={0.1} anchorX="left" anchorY="top" position={[0.65, GOLDENRATIO, 0]} fontSize={0.05}>
+          {name}
+        </Text>
+      </group>
+    )
+  }
+
+  const Frames = ({ projects, q = new THREE.Quaternion(), p = new THREE.Vector3() }) => {
+    const ref = useRef();
+    const clicked = useRef();
+    const [, params] = useRoute('/3D/:id')
+    const [, setLocation] = useLocation()
+
+    useFrame((state, delta) => {
+      clicked.current = ref.current.getObjectByName(params?.id)
+      // console.log(ref.current)
+      if (clicked.current) {
+        clicked.current.parent.updateWorldMatrix(true, true)
+        clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 1.9, 1.4))
+        clicked.current.parent.getWorldQuaternion(q)
+      }
+      else {
+        p.set(0, 0, 0)
+        q.identity()
+      }
+    })
+
+    // Selects object to ease, 
+    // How fast camera moves after each project is selected
+    useFrame((state, dt) => {
+      easing.damp3(state.camera.position, p, 0.3, dt)
+      easing.dampQ(state.camera.quaternion, q, 0.3, dt)
+
+    })
+
+    return (
+      <React.Fragment>
+        <group
+          ref={ref}
+          onClick={(e) => {
+            e.stopPropagation(),
+              setLocation(clicked.current == e.object ? '/3D' : '/3D/' + e.object.name)
+          }}
+          onPointerMissed={() => setLocation('/3D')}>
+          {projects.map((props, index) => <Frame key={props.url} {...props} index={index} /> /* prettier-ignore */)}
+
+        </group>
+      </React.Fragment>
+    )
+  }
 
   return (
     <>
@@ -85,9 +189,15 @@ export default function Home() {
         >
         </input>
         <Canvas className={`row-start-3 col-start-1 col-span-7`} shadows camera={{ fov: 70, position: [0, 2, 15] }}>
+          <ambientLight intensity={1} />
+
+          {/* <Frames projects={projects} /> */}
+
           <Stats />
         </Canvas>
       </div>
     </>
   )
 }
+
+export default Home;
