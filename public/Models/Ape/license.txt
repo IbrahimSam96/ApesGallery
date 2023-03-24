@@ -1,0 +1,11 @@
+Model Information:
+* title:	Paulie "Big Ape" Fontini
+* source:	https://sketchfab.com/3d-models/paulie-big-ape-fontini-c3c338d01d5b47929b847feb2e3a6f10
+* author:	Gianluca Tessicini (https://sketchfab.com/glucat)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Paulie "Big Ape" Fontini" (https://sketchfab.com/3d-models/paulie-big-ape-fontini-c3c338d01d5b47929b847feb2e3a6f10) by Gianluca Tessicini (https://sketchfab.com/glucat) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
