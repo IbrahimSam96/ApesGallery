@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Edges, Gltf, Html, MeshReflectorMaterial, OrbitControls, ScrollControls, Stars, Stats, Svg, Text, useCursor, useScroll, useTexture } from '@react-three/drei'
 import { ethers } from 'ethers'
@@ -81,7 +81,7 @@ const Home = () => {
       })
     }
 
-    if (positionedArr.length > 0) { 
+    if (positionedArr.length > 0) {
       positionedArr.map((obj, key) => {
         // Assign position property foreach object.
         let x = key % 2 == 0 ? 1.5 : -1.5;
@@ -101,12 +101,11 @@ const Home = () => {
 
   const Frame = ({ tokenID, imageURI, collection, ...props }) => {
 
-    const project = useRef(null)
-    const frame = useRef(null);
+    const project = useRef()
+    const frame = useRef();
     const [, params] = useRoute('/3D/:id')
     const [hovered, hover] = useState(false)
-    const [location, setLocation] = useLocation()
-    const router = useRouter()
+
     const isActive = params?.id === tokenID;
     useCursor(hovered)
 
@@ -236,27 +235,29 @@ const Home = () => {
         >
           <ambientLight intensity={0.8} />
           <ScrollControls pages={tokens.length} infinite >
+            <Stars radius={100} depth={500} count={5000} factor={4} saturation={0} fade speed={2} />
+            <Suspense fallback={null}>
+              <group position={[0, -.75, 0]}>
+                <Frames tokens={tokens} />
+                <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
+                  <planeGeometry args={[50, 150 * tokens.length]} />
+                  <MeshReflectorMaterial
+                    blur={[300, 100]}
+                    resolution={2048}
+                    mixBlur={1}
+                    mixStrength={50}
+                    roughness={1}
+                    depthScale={1.2}
+                    minDepthThreshold={0.4}
+                    maxDepthThreshold={1.4}
+                    color="#050505"
+                    metalness={0.5}
+                  />
+                </mesh>
+                <Ape />
+              </group>
+            </Suspense>
 
-            <group position={[0, -.75, 0]}>
-              <Frames tokens={tokens} />
-              <Ape />
-              <Stars radius={100} depth={500} count={5000} factor={4} saturation={0} fade speed={2} />
-              <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
-                <planeGeometry args={[50, 150 * tokens.length]} />
-                <MeshReflectorMaterial
-                  blur={[300, 100]}
-                  resolution={2048}
-                  mixBlur={1}
-                  mixStrength={50}
-                  roughness={1}
-                  depthScale={1.2}
-                  minDepthThreshold={0.4}
-                  maxDepthThreshold={1.4}
-                  color="#050505"
-                  metalness={0.5}
-                />
-              </mesh>
-            </group>
           </ScrollControls>
 
           <Stats />
