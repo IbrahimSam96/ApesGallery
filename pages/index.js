@@ -1,8 +1,5 @@
 import Head from 'next/head'
-// import Image from 'next/image'
-import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
 import React, { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Edges, Gltf, Html, MeshReflectorMaterial, OrbitControls, ScrollControls, Stars, Stats, Svg, Text, useCursor, useScroll, useTexture } from '@react-three/drei'
@@ -14,11 +11,9 @@ import useLocation from 'wouter/use-location'
 import { easing } from 'maath'
 import { Image } from '@react-three/drei'
 import { Ape } from '../Ape'
-import { EffectComposer, Bloom, DepthOfField, ChromaticAberration } from '@react-three/postprocessing'
-import { BlendFunction } from "postprocessing";
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import { useControls } from 'leva'
 
 
 const Home = () => {
@@ -86,7 +81,7 @@ const Home = () => {
       })
     }
 
-    if (positionedArr.length > 0) {
+    if (positionedArr.length > 0) { 
       positionedArr.map((obj, key) => {
         // Assign position property foreach object.
         let x = key % 2 == 0 ? 1.5 : -1.5;
@@ -106,8 +101,8 @@ const Home = () => {
 
   const Frame = ({ tokenID, imageURI, collection, ...props }) => {
 
-    const project = useRef()
-    const frame = useRef();
+    const project = useRef(null)
+    const frame = useRef(null);
     const [, params] = useRoute('/3D/:id')
     const [hovered, hover] = useState(false)
     const [location, setLocation] = useLocation()
@@ -175,7 +170,7 @@ const Home = () => {
     const scroll = useScroll()
 
     useFrame((state, delta) => {
-      clicked.current = ref.current.getObjectByName(params?.id)
+      clicked.current = ref.current?.getObjectByName(params?.id)
       // console.log(ref.current)
       if (clicked.current) {
         clicked.current.parent.updateWorldMatrix(true, true)
