@@ -266,24 +266,24 @@ const Home = () => {
             <Stars radius={100} depth={500} count={5000} factor={4} saturation={0} fade speed={2} />
             <Suspense fallback={null}>
               <group position={[0, -.75, 0]}>
-           
-                  <Frames tokens={tokens} />
 
-                  <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
-                    <planeGeometry args={[50, 150 * tokens.length]} />
-                    <MeshReflectorMaterial
-                      blur={[300, 100]}
-                      resolution={2048}
-                      mixBlur={1}
-                      mixStrength={50}
-                      roughness={1}
-                      depthScale={1.2}
-                      minDepthThreshold={0.4}
-                      maxDepthThreshold={1.4}
-                      color="#050505"
-                      metalness={0.5}
-                    />
-                  </mesh>
+                <Frames tokens={tokens} />
+
+                <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
+                  <planeGeometry args={[50, 150 * tokens.length]} />
+                  <MeshReflectorMaterial
+                    blur={[300, 100]}
+                    resolution={2048}
+                    mixBlur={1}
+                    mixStrength={50}
+                    roughness={1}
+                    depthScale={1.2}
+                    minDepthThreshold={0.4}
+                    maxDepthThreshold={1.4}
+                    color="#050505"
+                    metalness={0.5}
+                  />
+                </mesh>
                 <Ape />
                 {tokens.map((obj, key) => {
                   return (
@@ -293,7 +293,7 @@ const Home = () => {
                   )
                 })
                 }
-                <Center position={[-6.5, 2, -2]} rotation={[0, 1, 0]}>
+                <Center position={[-7.5, 1, -2]} rotation={[0, 1, 0]}>
                   <Text3D
                     curveSegments={32}
                     bevelEnabled
@@ -307,7 +307,12 @@ const Home = () => {
                     {`BAYC`}
                     <meshNormalMaterial />
                   </Text3D>
+
                 </Center>
+                <Ethereum position={[-6.5, 1.75, -3]} scale={[0.2,0.2,0.2]}  />
+                {/* <spotLight color={"hotpink"} position={[-5,2,4]} /> */}
+                <spotLight color={"hotpink"} position={[2,2,7]} distance={10} />
+
               </group>
             </Suspense>
 

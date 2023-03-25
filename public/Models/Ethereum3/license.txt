@@ -1,0 +1,11 @@
+Model Information:
+* title:	Etherum
+* source:	https://sketchfab.com/3d-models/etherum-27e96ba5b845401b8098ac3bfe78a1b0
+* author:	Felix Yadomi (https://sketchfab.com/felixyadomi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Etherum" (https://sketchfab.com/3d-models/etherum-27e96ba5b845401b8098ac3bfe78a1b0) by Felix Yadomi (https://sketchfab.com/felixyadomi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

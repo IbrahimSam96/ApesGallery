@@ -4,31 +4,45 @@ import { Mesh } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 
-export const Ethereum = () => {
+export const Ethereum = ({ position, scale }) => {
 
+    const Ref = useRef();
 
-    const url = "Models/Ethereum/Ethereum.gltf"
+    const url = "Models/Ethereum3/Ethereum3.gltf"
     const gltf = useLoader(GLTFLoader, url);
+    const [xRotSpeed] = useState(() => Math.random());
+    const [yRotSpeed] = useState(() => Math.random());
 
-
-    useEffect(() => {
-        gltf.scene.scale.set(0.003, 0.003, 0.003);
-        gltf.scene.position.set(-3, 2, 1);
-
+    useFrame((state, delta) => {
         gltf.scene.traverse((object) => {
             if (object instanceof Mesh) {
-                object.castShadow = true;
-                object.receiveShadow = true;
-                object.material.envMapIntensity = 20;
-
+                object.rotation.y += delta * xRotSpeed
             }
+            // Ref.current.rotation.x += delta * xRotSpeed
+            // Ref.current.rotation.y += delta * yRotSpeed
+
+            // console.log(boxRef.current)
         })
 
-    }, [gltf])
+        }, [xRotSpeed, yRotSpeed]);
 
-    return (
-        <group>
-            <primitive object={gltf.scene} />
-        </group>
-    )
-}
+        useEffect(() => {
+            // gltf.scene.scale.set(0.05, 0.005, 0.005);
+
+            gltf.scene.traverse((object) => {
+                if (object instanceof Mesh) {
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+                    object.material.envMapIntensity = 20;
+
+                }
+            })
+
+        }, [gltf])
+
+        return (
+            <group ref={Ref}>
+                <primitive object={gltf.scene} position={position} scale={scale} />
+            </group>
+        )
+    }
