@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Edges, Gltf, Html, MeshReflectorMaterial, OrbitControls, ScrollControls, Stars, Stats, Svg, Text, useCursor, useScroll, useTexture } from '@react-three/drei'
+import { Center, Edges, Gltf, Html, MeshReflectorMaterial, OrbitControls, ScrollControls, SpotLight, Stars, Stats, Svg, Text, Text3D, Trail, useCursor, useScroll, useTexture } from '@react-three/drei'
 import { ethers } from 'ethers'
 import { createClient } from 'urql'
 import * as THREE from 'three'
@@ -14,6 +14,10 @@ import { Ape } from '../Ape'
 import { useRouter } from 'next/router'
 
 import { useControls } from 'leva'
+import { Bannana } from '../Bannana'
+import { Carpet } from '../Carpet'
+import { Light } from '../Light'
+import { Ethereum } from '../Ethereum'
 
 
 const Home = () => {
@@ -52,6 +56,33 @@ const Home = () => {
   const client2 = createClient({
     url: BoredAPIURL
   })
+
+  const HolderOptions = {
+    "BendDAO Collateral": "0x69f37e419bd1457d2a25ed3f5d418169caae8d1f",
+    "machibigbrother.eth": "0x020cA66C30beC2c4Fe3861a94E4DB4A498A35872",
+    "n0b0dy.eth": "0x7eb413211a9DE1cd2FE8b8Bb6055636c43F7d206",
+    "panthro.eth": "0x122b19a4Be93d7c2b4522ebF7EB3F1b5B0343b2f",
+    "keungz.eth": "0x6C8Ee01F1f8B62E987b3D18F6F28b22a0Ada755f",
+    "jrnyclub.eth": "0x1b523DC90A79cF5ee5d095825e586e33780f7188",
+    "qaz.eth": "0xA37FbD2264b48ED56Dd7dE8B9B83DB35561700eF",
+    "kegvault.eth": "0xd611A3350321558BDa7d15Da88e4b74eaF4c8986",
+    "bayc.01k.eth": "0x5CEFF23A72431c69fB7F0e035D98B02fD27441b5",
+    "deerhunters.eth": "0xf4893542E4ec7C33356579F91bF22E8FA7CD06dc",
+    "monkeybread.eth": "0x4918fc71BD92F262c4D2F73804fa805de8602743",
+    "feld4014.eth": "0xC883A79E8e4594C4f89434EDb754a10Da2311139",
+    "rh0729.eth": "0x840De9986997435983F3D827dF933638F1eD23d7",
+    "nftsanctuary.eth": "0xb4D5b4d979E3c2AeDfe4b80fA0328713dB1A4Dca"
+
+  }
+  const TopHolders = useControls({
+    "Top BAYC Holders": {
+      value: address,
+      options: HolderOptions,
+      onChange: (v) => {
+        setAddress(v.toLowerCase())
+      },
+    },
+  });
 
   useEffect(() => {
     let isAddress = ethers.utils.isAddress(address)
@@ -178,8 +209,8 @@ const Home = () => {
       }
       else {
         let x = state.mouse.x * 0.25
-        let y = state.mouse.y * 0.25
-        p.set(x, y, 5.5 + scroll.scroll.current * - (tokens.length * 1.5))
+        let y = state.mouse.y * 0.25 + 0.2
+        p.set(x, y, 6.5 + scroll.scroll.current * - (tokens.length * 1.5))
         q.identity()
       }
     })
@@ -238,23 +269,48 @@ const Home = () => {
             <Stars radius={100} depth={500} count={5000} factor={4} saturation={0} fade speed={2} />
             <Suspense fallback={null}>
               <group position={[0, -.75, 0]}>
-                <Frames tokens={tokens} />
-                <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
-                  <planeGeometry args={[50, 150 * tokens.length]} />
-                  <MeshReflectorMaterial
-                    blur={[300, 100]}
-                    resolution={2048}
-                    mixBlur={1}
-                    mixStrength={50}
-                    roughness={1}
-                    depthScale={1.2}
-                    minDepthThreshold={0.4}
-                    maxDepthThreshold={1.4}
-                    color="#050505"
-                    metalness={0.5}
-                  />
-                </mesh>
+           
+                  <Frames tokens={tokens} />
+
+                  <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
+                    <planeGeometry args={[50, 150 * tokens.length]} />
+                    <MeshReflectorMaterial
+                      blur={[300, 100]}
+                      resolution={2048}
+                      mixBlur={1}
+                      mixStrength={50}
+                      roughness={1}
+                      depthScale={1.2}
+                      minDepthThreshold={0.4}
+                      maxDepthThreshold={1.4}
+                      color="#050505"
+                      metalness={0.5}
+                    />
+                  </mesh>
                 <Ape />
+                {tokens.map((obj, key) => {
+                  return (
+                    <>
+                      <Carpet n={key} />
+                    </>
+                  )
+                })
+                }
+                <Center position={[-6.5, 2, -2]} rotation={[0, 1, 0]}>
+                  <Text3D
+                    curveSegments={32}
+                    bevelEnabled
+                    bevelSize={0.04}
+                    bevelThickness={0.1}
+                    height={0.5}
+                    lineHeight={0.7}
+                    letterSpacing={-0.06}
+                    size={1}
+                    font="/font.json">
+                    {`BAYC`}
+                    <meshNormalMaterial />
+                  </Text3D>
+                </Center>
               </group>
             </Suspense>
 

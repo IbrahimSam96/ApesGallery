@@ -1,0 +1,11 @@
+Model Information:
+* title:	Banana duct taped to the wall
+* source:	https://sketchfab.com/3d-models/banana-duct-taped-to-the-wall-9efb18fa4f8444188e6dccf974c2dcee
+* author:	bvchepovyi (https://sketchfab.com/bvchepovyi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Banana duct taped to the wall" (https://sketchfab.com/3d-models/banana-duct-taped-to-the-wall-9efb18fa4f8444188e6dccf974c2dcee) by bvchepovyi (https://sketchfab.com/bvchepovyi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
