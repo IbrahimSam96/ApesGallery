@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Center, Edges, Gltf, Html, MeshReflectorMaterial, OrbitControls, ScrollControls, SpotLight, Stars, Stats, Svg, Text, Text3D, Trail, useCursor, useScroll, useTexture } from '@react-three/drei'
+import { Center, Edges, MeshReflectorMaterial, ScrollControls, Stars, Stats, Text, Text3D, useCursor, useScroll, useTexture } from '@react-three/drei'
 import { ethers } from 'ethers'
 import { createClient } from 'urql'
 import * as THREE from 'three'
@@ -11,12 +11,9 @@ import useLocation from 'wouter/use-location'
 import { easing } from 'maath'
 import { Image } from '@react-three/drei'
 import { Ape } from '../Ape'
-import { useRouter } from 'next/router'
 
 import { useControls } from 'leva'
-import { Bannana } from '../Bannana'
 import { Carpet } from '../Carpet'
-import { Light } from '../Light'
 import { Ethereum } from '../Ethereum'
 
 
