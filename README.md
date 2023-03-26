@@ -8,7 +8,7 @@
 
 ## Features
 
-- Enter Any wallet address and browse through their BAYC NFT holdings. 
+- Enter any wallet address and query/browse through their BAYC NFT holdings. 
 - View Top 10 holders of BAYC NFT's
 
 ## Technologies Used 
