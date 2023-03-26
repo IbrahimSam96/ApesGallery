@@ -14,7 +14,7 @@
 ## Technologies Used 
 
 - Next.js and TailwindCSS 
-- graphql + urql 
+- graphql + The Graph + urql 
 - Three.js / React Three Fiber / React/Drei
 
 ## Future Work
