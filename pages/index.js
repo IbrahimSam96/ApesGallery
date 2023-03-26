@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Center, Edges, MeshReflectorMaterial, ScrollControls, Stars, Stats, Text, Text3D, useCursor, useScroll, useTexture } from '@react-three/drei'
+import { Center, Edges, Loader, MeshReflectorMaterial, ScrollControls, Stars, Stats, Text, Text3D, useCursor, useScroll, useTexture } from '@react-three/drei'
 import { ethers } from 'ethers'
 import { createClient } from 'urql'
 import * as THREE from 'three'
@@ -266,7 +266,6 @@ const Home = () => {
             <Stars radius={100} depth={500} count={5000} factor={4} saturation={0} fade speed={2} />
             <Suspense fallback={null}>
               <group position={[0, -.75, 0]}>
-
                 <Frames tokens={tokens} />
 
                 <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
@@ -309,9 +308,9 @@ const Home = () => {
                   </Text3D>
 
                 </Center>
-                <Ethereum position={[-6.5, 1.75, -3]} scale={[0.2,0.2,0.2]}  />
+                <Ethereum position={[-6.5, 1.75, -3]} scale={[0.2, 0.2, 0.2]} />
                 {/* <spotLight color={"hotpink"} position={[-5,2,4]} /> */}
-                <spotLight color={"hotpink"} position={[2,2,7]} distance={10} />
+                <spotLight color={"hotpink"} position={[2, 2, 7]} distance={10} />
 
               </group>
             </Suspense>
@@ -320,6 +319,7 @@ const Home = () => {
 
           <Stats />
         </Canvas>
+        <Loader />
       </div>
     </>
   )
