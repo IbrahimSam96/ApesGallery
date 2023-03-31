@@ -21,7 +21,7 @@ const Home = () => {
 
   const GOLDENRATIO = 1.61803398875
 
-  const [address, setAddress] = useState("0x69f37e419bd1457d2a25ed3f5d418169caae8d1f");
+  const [address, setAddress] = useState("0x7eb413211a9DE1cd2FE8b8Bb6055636c43F7d206");
 
   const [tokens, setTokens] = useState([]);
   const MutantAPIURL = "https://api.thegraph.com/subgraphs/name/ibrahimsam96/boredandmutant-apes"
