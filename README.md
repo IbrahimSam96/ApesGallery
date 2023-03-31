@@ -1,6 +1,8 @@
 # [BAYC Gallery ](https://bayc-gallery.vercel.app/) - BAYC Gallery Show 
+<img src="https://github.com/IbrahimSam96/ApesGallery/blob/main/public/Award.PNG" width="300">
 
 <img src="https://github.com/IbrahimSam96/ApesGallery/blob/main/public/Background.PNG" width="600">
+
 
 ## Authors
 - [Ibrahim Samara](https://github.com/IbrahimSam96)
